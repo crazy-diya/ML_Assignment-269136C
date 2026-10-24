@@ -15,6 +15,9 @@ on:
       sample_size:
         description: "Number of fresh ads to collect"
         default: "150"
+      tolerance:
+        description: "Promote the challenger if its log-RMSE is within this fraction of the champion's (0.02 = 2%)"
+        default: "0.02"
 
 permissions:
   contents: write
@@ -57,7 +60,7 @@ jobs:
         id: train
         if: steps.monitor.outputs.drift_detected == 'true' || github.event.inputs.force_retrain == 'true'
         run: |
-          python mlops/train.py --fresh data/fresh_batch.csv
+          python mlops/train.py --fresh data/fresh_batch.csv --tolerance "${{ github.event.inputs.tolerance || 0.02 }}"
           python - <<'PY' >> "$GITHUB_OUTPUT"
           import json
           r = json.load(open("monitoring/retrain_report.json"))

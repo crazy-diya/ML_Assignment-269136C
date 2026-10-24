@@ -1,6 +1,7 @@
 # Sri Lankan Used-Car Price Prediction (Applied Machine Learning)
 
-**Live demo:** https://crazy-diya-ml-assignment-269136c-app-8yzt7l.streamlit.app/
+**Live demo (Azure Container Apps):** https://car-price-app.bluemeadow-a6e43a1f.malaysiawest.azurecontainerapps.io  
+**Live demo (Streamlit Cloud):** https://crazy-diya-ml-assignment-269136c-app-8yzt7l.streamlit.app/
 
 Predict the **asking price (LKR)** of a used/new car advertised in Sri Lanka from its specification — a tabular **regression** problem on ~3,000 live listings scraped from [ikman.lk](https://ikman.lk).
 
@@ -34,6 +35,9 @@ streamlit run app.py             # front end (needs only requirements.txt)
 | Ridge baseline / Decision-tree baseline | 0.761 / 0.735 | 16.7 % / 23.5 % | 0.272 / 0.335 |
 
 Hyper-parameters were designed per algorithm and tuned with 5-fold randomised search (no defaults). Explanations: SHAP (global) and LIME (local).
+
+## MLOps (bonus)
+CI tests, weekly drift monitoring, gated retraining, Docker and Azure Container Apps deployment: see [MLOPS.md](MLOPS.md).
 
 ## Notes and limitations
 * Prices are **asking prices** from one website at one point in time, not final sale prices.
