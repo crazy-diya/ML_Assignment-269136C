@@ -1,5 +1,7 @@
 # Sri Lankan Used-Car Price Prediction (Applied Machine Learning)
 
+**Live demo:** https://crazy-diya-ml-assignment-269136c-app-8yzt7l.streamlit.app/
+
 Predict the **asking price (LKR)** of a used/new car advertised in Sri Lanka from its specification — a tabular **regression** problem on ~3,000 live listings scraped from [ikman.lk](https://ikman.lk).
 
 ## Files
@@ -39,6 +41,8 @@ Hyper-parameters were designed per algorithm and tuned with 5-fold randomised se
 * Rare luxury/vintage cars have few comparables and are predicted less reliably.
 
 ## Deploy the app (Streamlit Community Cloud)
+Deployed at https://crazy-diya-ml-assignment-269136c-app-8yzt7l.streamlit.app/
+
 1. Sign in at https://share.streamlit.io with GitHub and click **Create app**.
 2. Repository `crazy-diya/ML_Assignment-269136C`, branch `main`, main file `app.py`.
 3. Under **Advanced settings** choose Python 3.12 or 3.13, then **Deploy**.
