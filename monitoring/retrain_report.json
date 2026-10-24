@@ -1,0 +1,22 @@
+{
+ "time_utc": "2026-10-24T20:54:55+00:00",
+ "git_sha": "bc65965",
+ "train_rows": 3046,
+ "challenger": {
+  "rmse_log": 0.1163408933631435,
+  "r2": 0.9782973338173383,
+  "mape_pct": 8.568745098023648,
+  "mae_lkr": 935685.7563605286,
+  "n": 40
+ },
+ "champion": {
+  "rmse_log": 0.11442672444284419,
+  "r2": 0.983533806420344,
+  "mape_pct": 8.798215802562193,
+  "mae_lkr": 923116.4831689175,
+  "n": 40
+ },
+ "promoted": true,
+ "reason": "challenger log-RMSE 0.1163 vs champion 0.1144: promoted",
+ "version": "2026.10.24"
+}

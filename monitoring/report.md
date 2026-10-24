@@ -1,20 +1,20 @@
 ## Model monitoring report
 
-* Model version **2026.10.23** · fresh ads checked: **200** · time (UTC): 2026-10-24T20:30:47+00:00
-* Live accuracy on unseen ads: **MAPE 9.4%** (test MAPE 12.6%, ratio 0.74, alert > 1.3) -> OK
-* Median price vs training data: -4.4%
-* **Drift detected: no**
+* Model version **2026.10.23** · fresh ads checked: **100** · time (UTC): 2026-10-24T20:54:42+00:00
+* Live accuracy on unseen ads: **MAPE 8.8%** (test MAPE 12.6%, ratio 0.69, alert > 1.3) -> OK
+* Median price vs training data: -18.5%
+* **Drift detected: YES** (price_lkr, mileage_km, brand)
 
 | Feature | Type | PSI | KS p-value | Drift |
 |---|---|---|---|---|
-| price_lkr | numeric | 0.049 | 0.66681 | no |
-| model_year | numeric | 0.098 | 0.0128 | no |
-| engine_cc | numeric | 0.045 | 0.26362 | no |
-| mileage_km | numeric | 0.078 | 0.03067 | no |
-| brand | categorical | 0.052 |  | no |
-| condition | categorical | 0.093 |  | no |
-| fuel_type | categorical | 0.041 |  | no |
-| body | categorical | 0.161 |  | no |
-| transmission | categorical | 0.061 |  | no |
+| price_lkr | numeric | 0.255 | 0.00011 | YES |
+| model_year | numeric | 0.038 | 0.22619 | no |
+| engine_cc | numeric | 0.187 | 0.01265 | no |
+| mileage_km | numeric | 0.238 | 0.08812 | YES |
+| brand | categorical | 0.529 |  | YES |
+| condition | categorical | 0.003 |  | no |
+| fuel_type | categorical | 0.069 |  | no |
+| body | categorical | 0.179 |  | no |
+| transmission | categorical | 0.038 |  | no |
 
 _PSI > 0.2 = significant shift. Fresh ads are a stand-in for production traffic._
