@@ -48,6 +48,7 @@ python mlops/train.py --fresh data/fresh_batch.csv
 GitHub: **Actions → Monitor and retrain → Run workflow** (tick *force_retrain* to demonstrate the whole loop).
 
 ## Honest limitations
+* The app's ± error range uses `test_metrics`, evaluated on 597 cars. A retrain only replaces it if it is evaluated on at least 300 ads; smaller checks (e.g. 40 fresh ads) are stored as `latest_eval` instead, because a small sample gives an overly optimistic error.
 * Streamlit Community Cloud has no persistent storage, so predictions made in the app are **not logged**. Fresh ikman.lk ads stand in for production traffic when checking drift and live accuracy. With Azure/Container Apps the app could log requests to a storage account.
 * Fresh ads are asking prices, like the training data, so drift in *asking* prices is what is measured.
 * Retraining reuses the notebook's tuned hyper-parameters rather than re-running the full search; re-tune manually if the data changes a lot.

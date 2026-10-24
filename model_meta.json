@@ -755,13 +755,23 @@
  ],
  "best_model": "Stacking (XGB + LGBM + CatBoost -> Ridge)",
  "test_metrics": {
-  "RMSE (log)": 0.1163,
-  "R\u00b2": 0.9783,
-  "MAPE %": 8.569,
-  "MAE (LKR)": 935685.8
+  "RMSE (log)": 0.2249,
+  "R\u00b2": 0.9137,
+  "MAPE %": 12.643,
+  "MAE (LKR)": 1998287.1
  },
  "version": "2026.10.24",
  "trained_at_utc": "2026-10-24T20:54:55+00:00",
  "git_sha": "bc65965",
- "train_rows": 3086
+ "train_rows": 3086,
+ "latest_eval": {
+  "RMSE (log)": 0.1163,
+  "R\u00b2": 0.9783,
+  "MAPE %": 8.569,
+  "MAE (LKR)": 935685.8,
+  "n": 40,
+  "on": "fresh ads, 2026-10-24",
+  "note": "small sample, not used for the app's error range"
+ },
+ "test_metrics_n": 597
 }

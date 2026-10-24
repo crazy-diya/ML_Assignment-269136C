@@ -98,6 +98,7 @@ def test_metadata_and_quality_gate(meta):
     m = meta["test_metrics"]
     assert m["R²"] >= 0.85, "model R² fell below the 0.85 release threshold"
     assert m["MAPE %"] <= 20, "model MAPE rose above the 20 % release threshold"
+    assert meta["test_metrics_n"] >= 300, "error range must come from an evaluation on at least 300 ads"
 
 
 # ---------------------------------------------------------------- app

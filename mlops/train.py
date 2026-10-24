@@ -36,6 +36,7 @@ sys.path.insert(0, str(ROOT))
 from carprep import CAT_COLS, NUM_COLS, RAW_COLS, CarFeatures, CatBoostSK, LogPriceModel, clean_rows  # noqa: E402
 
 SEED = 42
+MIN_EVAL_ROWS = 300   # the app's error range only follows evaluations on at least this many ads
 # Hyper-parameters selected by 5-fold randomised search in Vehicle_Price_Prediction.ipynb
 XGB_PARAMS = dict(colsample_bytree=0.6062, gamma=0.0545, learning_rate=0.0289, max_depth=6, min_child_weight=2,
                   n_estimators=321, reg_lambda=0.5107, subsample=0.6092)
@@ -150,8 +151,11 @@ def main():
         meta["trained_at_utc"] = report["time_utc"]
         meta["git_sha"] = report["git_sha"]
         meta["train_rows"] = int(len(all_df))
-        meta["test_metrics"] = {"RMSE (log)": round(ch["rmse_log"], 4), "R²": round(ch["r2"], 4),
-                                "MAPE %": round(ch["mape_pct"], 3), "MAE (LKR)": round(ch["mae_lkr"], 1)}
+        scores = {"RMSE (log)": round(ch["rmse_log"], 4), "R²": round(ch["r2"], 4),
+                  "MAPE %": round(ch["mape_pct"], 3), "MAE (LKR)": round(ch["mae_lkr"], 1)}
+        if ch["n"] >= MIN_EVAL_ROWS or "test_metrics" not in meta:
+            meta["test_metrics"], meta["test_metrics_n"] = scores, ch["n"]   # drives the app's +/- range
+        meta["latest_eval"] = {**scores, "n": ch["n"], "on": "holdout of this retrain"}
         meta_path.write_text(json.dumps(meta, indent=1))
         if args.fresh:   # grow the versioned dataset with the new raw ads (cleaning stays reproducible)
             merged = pd.concat([pd.read_csv(args.data), pd.read_csv(args.fresh)], ignore_index=True)
