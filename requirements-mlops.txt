@@ -1,0 +1,4 @@
+# extra libraries for the MLOps pipeline (tests, scraping, monitoring)
+pytest==9.1.1
+requests==2.34.2
+scipy==1.18.1

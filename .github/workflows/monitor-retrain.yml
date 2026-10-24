@@ -1,0 +1,95 @@
+name: Monitor and retrain
+
+# Weekly: collect fresh ads -> check drift and live accuracy -> if drifted, retrain a challenger,
+# compare with the champion on unseen ads and, if it is not worse, open a pull request.
+# Merging the PR updates main, which redeploys the Streamlit app (continuous deployment).
+on:
+  schedule:
+    - cron: "0 3 * * 1"      # Mondays 03:00 UTC
+  workflow_dispatch:
+    inputs:
+      force_retrain:
+        description: "Retrain even if no drift is detected"
+        type: boolean
+        default: false
+      sample_size:
+        description: "Number of fresh ads to collect"
+        default: "150"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+env:
+  APP_URL: https://crazy-diya-ml-assignment-269136c-app-8yzt7l.streamlit.app/
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install dependencies
+        run: pip install -r requirements.txt -r requirements-mlops.txt
+
+      - name: Check the live app is up
+        run: |
+          code=$(curl -sL -c cj -b cj -o /dev/null -w "%{http_code}" "$APP_URL")
+          echo "Live app HTTP status: $code" | tee -a "$GITHUB_STEP_SUMMARY"
+          test "$code" = "200"
+
+      - name: Collect fresh ads (unseen by the model)
+        run: |
+          python scrape_ikman_cars.py --max-ads "${{ github.event.inputs.sample_size || 150 }}" --max-pages 80 \
+            --delay 1.5 --exclude-csv ikman_cars.csv --cache data/fresh_raw.jsonl --out-csv data/fresh_batch.csv
+
+      - name: Drift and performance monitoring
+        id: monitor
+        run: |
+          python mlops/monitor.py --fresh data/fresh_batch.csv
+          cat monitoring/report.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Retrain challenger and compare with champion
+        id: train
+        if: steps.monitor.outputs.drift_detected == 'true' || github.event.inputs.force_retrain == 'true'
+        run: |
+          python mlops/train.py --fresh data/fresh_batch.csv
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import json
+          r = json.load(open("monitoring/retrain_report.json"))
+          print("promoted=" + str(r["promoted"]).lower())
+          PY
+          python - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json
+          r = json.load(open("monitoring/retrain_report.json"))
+          print("\n## Retraining\n\n" + r["reason"])
+          PY
+
+      - name: Open pull request with the new model
+        if: steps.train.outputs.promoted == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          branch="retrain/$(date -u +%Y%m%d-%H%M)"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$branch"
+          git add model.pkl model_meta.json ikman_cars.csv monitoring
+          git commit -m "Retrain model on fresh data (automated)"
+          git push origin "$branch"
+          gh pr create --base main --head "$branch" \
+            --title "Automated retrain: new model passed the quality gate" \
+            --body "Drift or degradation was detected (or a retrain was forced). The challenger model was trained on old + fresh ads and scored no worse than the champion on unseen ads. See monitoring/retrain_report.json. **Merging redeploys the app.**"
+
+      - name: Upload reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: monitoring-reports
+          path: |
+            monitoring/
+            data/fresh_batch.csv

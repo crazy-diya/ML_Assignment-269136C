@@ -1,0 +1,98 @@
+{
+ "time_utc": "2026-10-24T20:30:47+00:00",
+ "model_version": "2026.10.23",
+ "fresh_rows": 200,
+ "drifted_features": [],
+ "performance": {
+  "fresh_mape_pct": 9.4,
+  "baseline_mape_pct": 12.6429,
+  "ratio": 0.74,
+  "fresh_rmse_log": 0.1454,
+  "degraded": false
+ },
+ "median_price_shift_pct": -4.4,
+ "drift_detected": false,
+ "features": [
+  {
+   "feature": "price_lkr",
+   "type": "numeric",
+   "psi": 0.0488,
+   "ks_p": 0.66681,
+   "ref_median": 10700000.0,
+   "fresh_median": 10225000.0,
+   "drifted": false
+  },
+  {
+   "feature": "model_year",
+   "type": "numeric",
+   "psi": 0.0975,
+   "ks_p": 0.0128,
+   "ref_median": 2024.0,
+   "fresh_median": 2019.0,
+   "drifted": false
+  },
+  {
+   "feature": "engine_cc",
+   "type": "numeric",
+   "psi": 0.0452,
+   "ks_p": 0.26362,
+   "ref_median": 1200.0,
+   "fresh_median": 1095.0,
+   "drifted": false
+  },
+  {
+   "feature": "mileage_km",
+   "type": "numeric",
+   "psi": 0.078,
+   "ks_p": 0.03067,
+   "ref_median": 14500.0,
+   "fresh_median": 44150.0,
+   "drifted": false
+  },
+  {
+   "feature": "brand",
+   "type": "categorical",
+   "psi": 0.0525,
+   "ks_p": null,
+   "ref_median": null,
+   "fresh_median": null,
+   "drifted": false
+  },
+  {
+   "feature": "condition",
+   "type": "categorical",
+   "psi": 0.093,
+   "ks_p": null,
+   "ref_median": null,
+   "fresh_median": null,
+   "drifted": false
+  },
+  {
+   "feature": "fuel_type",
+   "type": "categorical",
+   "psi": 0.041,
+   "ks_p": null,
+   "ref_median": null,
+   "fresh_median": null,
+   "drifted": false
+  },
+  {
+   "feature": "body",
+   "type": "categorical",
+   "psi": 0.161,
+   "ks_p": null,
+   "ref_median": null,
+   "fresh_median": null,
+   "drifted": false
+  },
+  {
+   "feature": "transmission",
+   "type": "categorical",
+   "psi": 0.0608,
+   "ks_p": null,
+   "ref_median": null,
+   "fresh_median": null,
+   "drifted": false
+  }
+ ]
+}

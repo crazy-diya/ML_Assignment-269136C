@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install dependencies
+        run: pip install -r requirements.txt -r requirements-mlops.txt
+      - name: Run tests (features, model, quality gate, app)
+        run: pytest tests -v
+
+  docker:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build image
+        run: docker build -t car-price-app .
+      - name: Smoke-test the container
+        run: |
+          docker run -d --name app -p 8501:8501 car-price-app
+          for i in $(seq 1 30); do
+            if curl -sf http://localhost:8501/_stcore/health; then echo " healthy"; exit 0; fi
+            sleep 3
+          done
+          docker logs app
+          exit 1

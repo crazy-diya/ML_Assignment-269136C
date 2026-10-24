@@ -5,6 +5,9 @@ between requests, and a resumable cache so an interrupted run continues where it
 
 Usage:
     python3 scrape_ikman_cars.py --max-ads 3000 --delay 1.5
+    # MLOps: collect a fresh batch of ads not yet in the training data
+    python3 scrape_ikman_cars.py --max-ads 250 --max-pages 60 --exclude-csv ikman_cars.csv \\
+        --cache data/fresh_raw.jsonl --out-csv data/fresh_batch.csv
 """
 import argparse
 import csv
@@ -80,17 +83,27 @@ def main():
     ap.add_argument("--max-ads", type=int, default=3000)
     ap.add_argument("--delay", type=float, default=1.5, help="seconds between requests")
     ap.add_argument("--max-pages", type=int, default=500)
+    ap.add_argument("--cache", default=str(CACHE), help="raw jsonl cache (resumable)")
+    ap.add_argument("--out-csv", default=str(CSV_OUT))
+    ap.add_argument("--exclude-csv", default=None, help="skip ads whose slug is already in this CSV")
     args = ap.parse_args()
+    cache, csv_out = Path(args.cache), Path(args.out_csv)
+    cache.parent.mkdir(parents=True, exist_ok=True); csv_out.parent.mkdir(parents=True, exist_ok=True)
 
     done = set()
-    if CACHE.exists():
-        with CACHE.open() as f:
+    if cache.exists():
+        with cache.open() as f:
             done = {json.loads(line)["slug"] for line in f if line.strip()}
-    print(f"Resuming with {len(done)} ads already saved")
+    known = set()
+    if args.exclude_csv:
+        with open(args.exclude_csv, newline="", encoding="utf-8") as f:
+            known = {row["slug"] for row in csv.DictReader(f)}
+    done |= known
+    saved = len(done) - len(known)
+    print(f"Resuming with {saved} ads already saved; skipping {len(known)} known ads")
 
     session = requests.Session()
-    saved = len(done)
-    with CACHE.open("a") as out:
+    with cache.open("a") as out:
         for page in range(1, args.max_pages + 1):
             if saved >= args.max_ads:
                 break
@@ -125,12 +138,12 @@ def main():
                     print(f"  {saved} ads saved (page {page})")
                 time.sleep(args.delay)
 
-    rows = [json.loads(line) for line in CACHE.open() if line.strip()]
-    with CSV_OUT.open("w", newline="", encoding="utf-8") as f:
+    rows = [json.loads(line) for line in cache.open() if line.strip()]
+    with csv_out.open("w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=FIELDS)
         w.writeheader()
         w.writerows(rows)
-    print(f"Wrote {len(rows)} rows to {CSV_OUT}")
+    print(f"Wrote {len(rows)} rows to {csv_out}")
 
 
 if __name__ == "__main__":

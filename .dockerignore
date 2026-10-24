@@ -1,0 +1,14 @@
+.venv
+.git
+.github
+__pycache__
+*.ipynb
+data
+monitoring
+report_figs
+tests
+mlops
+*.docx
+*.pptx
+*.csv
+*.md

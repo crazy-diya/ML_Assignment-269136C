@@ -126,3 +126,14 @@ class LogPriceModel(RegressorMixin, BaseEstimator):
 
     def predict(self, X):
         return np.expm1(self.pipeline.predict(X))
+
+
+def clean_rows(df):
+    """Row-level filter shared by the notebook, training and monitoring scripts.
+
+    Drops rows whose *target* is impossible (placeholder prices, future model years); invalid
+    *inputs* are handled later by CarFeatures (set to missing and imputed).
+    """
+    df = df.drop_duplicates("slug") if "slug" in df.columns else df
+    ok = (df["price_lkr"] >= 200_000) & (df["price_lkr"] <= 300_000_000) & (df["model_year"] <= REF_YEAR)
+    return df[ok].reset_index(drop=True)
