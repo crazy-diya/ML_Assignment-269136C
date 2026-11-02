@@ -1,80 +1,80 @@
 {
- "time_utc": "2026-10-24T20:54:42+00:00",
- "model_version": "2026.10.23",
- "fresh_rows": 100,
+ "time_utc": "2026-11-02T03:16:31+00:00",
+ "model_version": "2026.10.24",
+ "fresh_rows": 150,
  "drifted_features": [
   "price_lkr",
   "mileage_km",
-  "brand"
+  "condition"
  ],
  "performance": {
-  "fresh_mape_pct": 8.77,
-  "baseline_mape_pct": 12.6429,
-  "ratio": 0.69,
-  "fresh_rmse_log": 0.1291,
+  "fresh_mape_pct": 15.86,
+  "baseline_mape_pct": 12.643,
+  "ratio": 1.25,
+  "fresh_rmse_log": 0.2693,
   "degraded": false
  },
- "median_price_shift_pct": -18.5,
+ "median_price_shift_pct": 19.4,
  "drift_detected": true,
  "features": [
   {
    "feature": "price_lkr",
    "type": "numeric",
-   "psi": 0.255,
-   "ks_p": 0.00011,
-   "ref_median": 10700000.0,
-   "fresh_median": 8725000.0,
+   "psi": 0.1343,
+   "ks_p": 0.00672,
+   "ref_median": 10675000.0,
+   "fresh_median": 12750000.0,
    "drifted": true
   },
   {
    "feature": "model_year",
    "type": "numeric",
-   "psi": 0.0378,
-   "ks_p": 0.22619,
+   "psi": 0.0494,
+   "ks_p": 0.11252,
    "ref_median": 2024.0,
-   "fresh_median": 2023.0,
+   "fresh_median": 2024.0,
    "drifted": false
   },
   {
    "feature": "engine_cc",
    "type": "numeric",
-   "psi": 0.187,
-   "ks_p": 0.01265,
+   "psi": 0.045,
+   "ks_p": 0.21269,
    "ref_median": 1200.0,
-   "fresh_median": 1000.0,
+   "fresh_median": 1220.0,
    "drifted": false
   },
   {
    "feature": "mileage_km",
    "type": "numeric",
-   "psi": 0.2382,
-   "ks_p": 0.08812,
-   "ref_median": 14500.0,
-   "fresh_median": 13000.0,
+   "psi": 0.1712,
+   "ks_p": 0.0032,
+   "ref_median": 14450.0,
+   "fresh_median": 10000.0,
    "drifted": true
   },
   {
    "feature": "brand",
    "type": "categorical",
-   "psi": 0.5291,
-   "ks_p": null,
-   "ref_median": null,
-   "fresh_median": null,
-   "drifted": true
-  },
-  {
-   "feature": "condition",
-   "type": "categorical",
-   "psi": 0.0034,
+   "psi": 0.0697,
    "ks_p": null,
    "ref_median": null,
    "fresh_median": null,
    "drifted": false
   },
   {
+   "feature": "condition",
+   "type": "categorical",
+   "psi": 0.2367,
+   "ks_p": null,
+   "ref_median": null,
+   "fresh_median": null,
+   "drifted": true
+  },
+  {
    "feature": "fuel_type",
    "type": "categorical",
-   "psi": 0.0686,
+   "psi": 0.0015,
    "ks_p": null,
    "ref_median": null,
    "fresh_median": null,
@@ -83,7 +83,7 @@
   {
    "feature": "body",
    "type": "categorical",
-   "psi": 0.1787,
+   "psi": 0.1278,
    "ks_p": null,
    "ref_median": null,
    "fresh_median": null,
@@ -92,7 +92,7 @@
   {
    "feature": "transmission",
    "type": "categorical",
-   "psi": 0.0377,
+   "psi": 0.0038,
    "ks_p": null,
    "ref_median": null,
    "fresh_median": null,
