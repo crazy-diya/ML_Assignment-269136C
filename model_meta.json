@@ -41,6 +41,7 @@
   "Micro",
   "Mini",
   "Mitsubishi",
+  "Morris",
   "Nissan",
   "Opel",
   "Other brand",
@@ -104,6 +105,7 @@
    "523i",
    "528i",
    "530e",
+   "740Le",
    "740e",
    "740i",
    "Mini Cooper",
@@ -136,6 +138,7 @@
    "Tiggo"
   ],
   "Chevrolet": [
+   "Aveo",
    "Cruze"
   ],
   "Chrysler": [
@@ -366,6 +369,9 @@
    "eK Space",
    "eK Wagon"
   ],
+  "Morris": [
+   "Minor"
+  ],
   "Nissan": [
    "AD Wagon",
    "Almera",
@@ -411,6 +417,7 @@
    "2008",
    "3008",
    "305",
+   "404",
    "406",
    "5008",
    "505",
@@ -424,6 +431,7 @@
    "Panamera"
   ],
   "Proton": [
+   "Gen-2",
    "Saga",
    "Wira"
   ],
@@ -500,6 +508,7 @@
    "Corolla",
    "Corona",
    "Crown",
+   "Fielder",
    "Fortuner",
    "Harrier",
    "Hilux",
@@ -521,6 +530,7 @@
    "Roomy",
    "Rush",
    "Sienta",
+   "Soluna",
    "Sprinter",
    "Starlet",
    "TUNDRA",
@@ -722,6 +732,7 @@
   "Polgahawela",
   "Polgasowita",
   "Polonnaruwa City",
+  "Pugoda",
   "Pussellawa",
   "Puttalam City",
   "Ragama",
@@ -760,18 +771,17 @@
   "MAPE %": 12.643,
   "MAE (LKR)": 1998287.1
  },
- "version": "2026.10.24",
- "trained_at_utc": "2026-10-24T20:54:55+00:00",
- "git_sha": "bc65965",
- "train_rows": 3086,
+ "version": "2026.11.02",
+ "trained_at_utc": "2026-11-02T03:16:48+00:00",
+ "git_sha": "e40f01a",
+ "train_rows": 3236,
  "latest_eval": {
-  "RMSE (log)": 0.1163,
-  "R\u00b2": 0.9783,
-  "MAPE %": 8.569,
-  "MAE (LKR)": 935685.8,
-  "n": 40,
-  "on": "fresh ads, 2026-10-24",
-  "note": "small sample, not used for the app's error range"
+  "RMSE (log)": 0.2539,
+  "R\u00b2": 0.9254,
+  "MAPE %": 14.049,
+  "MAE (LKR)": 2272930.7,
+  "n": 60,
+  "on": "holdout of this retrain"
  },
  "test_metrics_n": 597
 }
