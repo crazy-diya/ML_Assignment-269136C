@@ -1,22 +1,22 @@
 {
- "time_utc": "2026-11-02T03:16:48+00:00",
- "git_sha": "e40f01a",
- "train_rows": 3176,
+ "time_utc": "2026-11-09T03:16:13+00:00",
+ "git_sha": "4040c88",
+ "train_rows": 3326,
  "challenger": {
-  "rmse_log": 0.2539029089854278,
-  "r2": 0.925391310863539,
-  "mape_pct": 14.04861217613312,
-  "mae_lkr": 2272930.7330224733,
+  "rmse_log": 0.18859480689472558,
+  "r2": 0.9318253659646218,
+  "mape_pct": 10.462903676172692,
+  "mae_lkr": 2461417.2955610952,
   "n": 60
  },
  "champion": {
-  "rmse_log": 0.2709992997872775,
-  "r2": 0.9007322458283679,
-  "mape_pct": 13.840605006857995,
-  "mae_lkr": 2420484.4013834745,
+  "rmse_log": 0.19486248414755167,
+  "r2": 0.9287135386917721,
+  "mape_pct": 10.663743809027514,
+  "mae_lkr": 2581188.8293945137,
   "n": 60
  },
  "promoted": true,
- "reason": "challenger log-RMSE 0.2539 vs champion 0.2710: promoted",
- "version": "2026.11.02"
+ "reason": "challenger log-RMSE 0.1886 vs champion 0.1949: promoted",
+ "version": "2026.11.09"
 }
