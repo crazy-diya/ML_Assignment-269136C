@@ -2,3 +2,4 @@ time_utc,model_version,fresh_rows,fresh_mape_pct,mape_ratio,drifted_features,dri
 2026-10-24T20:30:47+00:00,2026.10.23,200,9.4,0.74,,False
 2026-10-24T20:54:42+00:00,2026.10.23,100,8.77,0.69,price_lkr;mileage_km;brand,True
 2026-11-02T03:16:31+00:00,2026.10.24,150,15.86,1.25,price_lkr;mileage_km;condition,True
+2026-11-09T03:15:59+00:00,2026.11.02,150,12.28,0.97,brand,True
